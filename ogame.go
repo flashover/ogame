@@ -3907,7 +3907,7 @@ func (b *OGame) CreateUnion(fleet Fleet) (int64, error) {
 	return b.WithPriority(Normal).CreateUnion(fleet)
 }
 
-// getEmpire ....
+// GetEmpire retrieves JSON from Empire page (Commander only).
 func (b *OGame) getEmpire(nbr int64) (interface{}, error) {
 	// Valid URLs:
 	// /game/index.php?page=standalone&component=empire&planetType=0
