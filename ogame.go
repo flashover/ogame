@@ -1659,6 +1659,18 @@ func (b *OGame) executeJumpGate(originMoonID, destMoonID MoonID, ships ShipsInfo
 	return true, 0, nil
 }
 
+func (b *OGame) getEmpire(nbr int64) (interface{}, error) {
+	// Valid URLs:
+	// /game/index.php?page=standalone&component=empire&planetType=0
+	// /game/index.php?page=standalone&component=empire&planetType=1
+	vals := url.Values{"page": {"standalone"}, "component": {"empire"}, "planetType": {strconv.FormatInt(nbr, 10)}}
+	pageHTMLBytes, err := b.getPageContent(vals)
+	if err != nil {
+		return nil, err
+	}
+	return b.extractor.ExtractEmpire(pageHTMLBytes, nbr)
+}
+
 func (b *OGame) createUnion(fleet Fleet) (int64, error) {
 	if fleet.ID == 0 {
 		return 0, errors.New("invalid fleet id")
@@ -3911,9 +3923,25 @@ func (b *OGame) getEmpire(nbr int64) (interface{}, error) {
 	return b.extractor.ExtractEmpire([]byte(pageHTMLBytes), nbr)
 }
 
-// GetEmpire ...
+// getEmpire ....
+func (b *OGame) getEmpire(nbr int64) (interface{}, error) {
+	// Valid URLs:
+	// /game/index.php?page=standalone&component=empire&planetType=0
+	// /game/index.php?page=standalone&component=empire&planetType=1
+
+	url := url.Values{"page": {"standalone"}, "component": {"empire"}, "planetType": {strconv.FormatInt(nbr, 10)}}
+
+	pageHTMLBytes, err := b.getPageContent(url)
+	if err != nil {
+		return "", err
+	}
+
+	return b.extractor.ExtractEmpire([]byte(pageHTMLBytes), nbr)
+}
+
+// GetEmpire retrieves JSON from Empire page (Commander only).
 func (b *OGame) GetEmpire(nbr int64) (interface{}, error) {
-	return b.WithPriority(Low).GetEmpire(nbr)
+	return b.WithPriority(Normal).GetEmpire(nbr)
 }
 
 // GetPlanetEmpire ...
@@ -3927,5 +3955,3 @@ func (b *OGame) GetMoonEmpire() (MoonEmpire, error) {
 	moonempire, err := b.WithPriority(Low).GetEmpire(1)
 	return moonempire.(MoonEmpire), err // GetEmpire returns type interface{} so we need type assertion
 }
-
-

@@ -152,6 +152,7 @@ func start(c *cli.Context) error {
 	e.POST("/bot/set-user-agent", ogame.SetUserAgentHandler)
 	e.GET("/bot/server-url", ogame.ServerURLHandler)
 	e.GET("/bot/language", ogame.GetLanguageHandler)
+	e.GET("/bot/empire/type/:typeID", ogame.GetEmpireHandler)
 	e.POST("/bot/page-content", ogame.PageContentHandler)
 	e.GET("/bot/login", ogame.LoginHandler)
 	e.GET("/bot/logout", ogame.LogoutHandler)
