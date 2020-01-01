@@ -199,6 +199,8 @@ func start(c *cli.Context) error {
 	e.GET("/bot/planets/:planetID/resources", ogame.GetResourcesHandler)
 	e.POST("/bot/planets/:planetID/send-fleet", ogame.SendFleetHandler)
 	e.GET("/bot/empire/type/:typeID", ogame.GetEmpireHandler)
+	e.GET("/bot/empire/planet", ogame.GetPlanetEmpireHandler)
+	e.GET("/bot/empire/moon", ogame.GetMoonEmpireHandler)
 	e.POST("/bot/planets/:planetID/send-ipm", ogame.SendIPMHandler)
 
 	return e.Start(host + ":" + strconv.Itoa(port))

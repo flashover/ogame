@@ -786,6 +786,29 @@ func GetEmpireHandler(c echo.Context) error {
 	return c.JSON(http.StatusOK, SuccessResp(getEmpire))
 }
 
+func GetPlanetEmpireHandler(c echo.Context) error {
+	bot := c.Get("bot").(*OGame)
+
+	planetempire, err := bot.GetPlanetEmpire()
+	if err != nil {
+		return c.JSON(http.StatusInternalServerError, ErrorResp(500, err.Error()))
+	}
+
+	return c.JSON(http.StatusOK, SuccessResp(planetempire))
+}
+
+
+func GetMoonEmpireHandler(c echo.Context) error {
+	bot := c.Get("bot").(*OGame)
+
+	moonempire, err := bot.GetMoonEmpire()
+	if err != nil {
+		return c.JSON(http.StatusInternalServerError, ErrorResp(500, err.Error()))
+	}
+
+	return c.JSON(http.StatusOK, SuccessResp(moonempire))
+}
+
 // DeleteMessageHandler ...
 func DeleteMessageHandler(c echo.Context) error {
 	bot := c.Get("bot").(*OGame)

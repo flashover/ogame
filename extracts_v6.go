@@ -1988,6 +1988,18 @@ func extractEmpire(html string, nbr int64) (interface{}, error) {
 		return "", errors.New("Regexp for Empire JSON did not match anything")
 	}
 
+	if nbr == 0 {
+		var planetempire PlanetEmpire
+		if err := json.Unmarshal([]byte(m[1]), &planetempire); err != nil {
+			return "", err
+		}
+	} else if nbr == 1 {
+		var moonempire MoonEmpire
+		if err := json.Unmarshal([]byte(m[1]), &moonempire); err != nil {
+			return "", err
+		}
+	}
+
 	var empirejson interface{}
 
 	if err := json.Unmarshal([]byte(m[1]), &empirejson); err != nil {

@@ -3902,7 +3902,6 @@ func (b *OGame) getEmpire(nbr int64) (interface{}, error) {
 	// /game/index.php?page=standalone&component=empire&planetType=1
 
 	url := url.Values{"page": {"standalone"}, "component": {"empire"}, "planetType": {strconv.FormatInt(nbr, 10)}}
-	log.SetFlags(log.LstdFlags | log.Lshortfile)
 
 	pageHTMLBytes, err := b.getPageContent(url)
 	if err != nil {
@@ -3916,4 +3915,17 @@ func (b *OGame) getEmpire(nbr int64) (interface{}, error) {
 func (b *OGame) GetEmpire(nbr int64) (interface{}, error) {
 	return b.WithPriority(Low).GetEmpire(nbr)
 }
+
+// GetPlanetEmpire ...
+func (b *OGame) GetPlanetEmpire() (PlanetEmpire, error) {
+	planetempire, err := b.WithPriority(Low).GetEmpire(0)
+	return planetempire.(PlanetEmpire), err // GetEmpire returns type interface{} so we need type assertion
+}
+
+// GetMoonEmpire ...
+func (b *OGame) GetMoonEmpire() (MoonEmpire, error) {
+	moonempire, err := b.WithPriority(Low).GetEmpire(1)
+	return moonempire.(MoonEmpire), err // GetEmpire returns type interface{} so we need type assertion
+}
+
 
