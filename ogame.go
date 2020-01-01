@@ -3924,6 +3924,22 @@ func (b *OGame) getEmpire(nbr int64) (interface{}, error) {
 }
 
 // GetEmpire retrieves JSON from Empire page (Commander only).
+func (b *OGame) getEmpire(nbr int64) (interface{}, error) {
+	// Valid URLs:
+	// /game/index.php?page=standalone&component=empire&planetType=0
+	// /game/index.php?page=standalone&component=empire&planetType=1
+
+	url := url.Values{"page": {"standalone"}, "component": {"empire"}, "planetType": {strconv.FormatInt(nbr, 10)}}
+
+	pageHTMLBytes, err := b.getPageContent(url)
+	if err != nil {
+		return "", err
+	}
+
+	return b.extractor.ExtractEmpire([]byte(pageHTMLBytes), nbr)
+}
+
+// GetEmpire retrieves JSON from Empire page (Commander only).
 func (b *OGame) GetEmpire(nbr int64) (interface{}, error) {
 	return b.WithPriority(Normal).GetEmpire(nbr)
 }
