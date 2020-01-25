@@ -247,8 +247,6 @@ func start(c *cli.Context) error {
 	e.POST("/bot/do-auction", ogame.DoAuctionHandler)
 
 	e.GET("/bot/attacks", ogame.GetAttacksHandler)
-	e.GET("/bot/get-auction", ogame.GetAuction)
-	e.POST("/bot/do-auction", ogame.DoAuction)
 	e.GET("/bot/galaxy-infos/:galaxy/:system", ogame.GalaxyInfosHandler)
 	e.GET("/bot/get-research", ogame.GetResearchHandler)
 	e.GET("/bot/price/:ogameID/:nbr", ogame.GetPriceHandler)

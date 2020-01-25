@@ -1000,7 +1000,7 @@ func SendIPMHandler(c echo.Context) error {
 }
 
 // GetAuction ...
-func GetAuction(c echo.Context) error {
+func GetAuctionHandler(c echo.Context) error {
 	bot := c.Get("bot").(*OGame)
 	celestialID, err := strconv.ParseInt(c.Param("celestialID"), 10, 64)
 	if err != nil {
@@ -1015,7 +1015,7 @@ func GetAuction(c echo.Context) error {
 }
 
 // DoAuction (`celestialID=metal:crystal:deuterium` eg: `123456=123:456:789`)
-func DoAuction(c echo.Context) error {
+func DoAuctionHandler(c echo.Context) error {
 	bot := c.Get("bot").(*OGame)
 	var celestialID CelestialID
 	bid := make(map[CelestialID]Resources)
